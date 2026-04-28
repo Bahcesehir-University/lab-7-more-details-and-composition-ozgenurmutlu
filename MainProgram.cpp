@@ -1,12 +1,6 @@
-// ============================================================
-// Lab: More Details about Classes
-// Course: Object-Oriented Programming (C++)
-// Level: 2nd Year Engineering
-// Duration: 60 minutes
-// ============================================================
-
 #include <iostream>
 #include <string>
+#include <cmath> // FIX: abs için eklendi
 
 // ============================================================
 // CLASS DEFINITIONS
@@ -20,7 +14,7 @@ private:
     double y;
 public:
     // TODO 1: Constructor with member initializer list (double x, double y)
-    Point(double x, double y) : x(x), y(y) {}  // fixed
+    Point(double x, double y) : x(x), y(y) {}
 
     // TODO 2: const getter for x
     double getX() const { return x; }
@@ -43,16 +37,16 @@ private:
 public:
     // TODO 6: constructor with member initializer list
     Rectangle(double x1, double y1, double x2, double y2)
-        : topLeft(x1, y1), bottomRight(x2, y2) {}  // fixed
+        : topLeft(x1, y1), bottomRight(x2, y2) {}
 
     // TODO 7: const getWidth()
     double getWidth() const {
-        return bottomRight.getX() - topLeft.getX();
+        return std::abs(bottomRight.getX() - topLeft.getX()); // FIX
     }
 
     // TODO 8: const getHeight()
     double getHeight() const {
-        return topLeft.getY() - bottomRight.getY();
+        return std::abs(topLeft.getY() - bottomRight.getY()); // FIX
     }
 
     // TODO 9: const getArea()
@@ -76,8 +70,10 @@ public:
 
 // TODO 12: implement isSameSize
 bool isSameSize(const Rectangle& r1, const Rectangle& r2) {
-    return (r1.getWidth() == r2.getWidth()) &&
-           (r1.getHeight() == r2.getHeight());
+    const double EPS = 1e-6; // FIX: floating point karşılaştırma
+
+    return (std::abs(r1.getWidth() - r2.getWidth()) < EPS) &&
+           (std::abs(r1.getHeight() - r2.getHeight()) < EPS);
 }
 
 
