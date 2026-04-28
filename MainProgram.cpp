@@ -1,41 +1,39 @@
+// ============================================================
+// Lab: More Details about Classes
+// Course: Object-Oriented Programming (C++)
+// Level: 2nd Year Engineering
+// Duration: 60 minutes
+// ============================================================
+ 
 #include <iostream>
 #include <string>
-#include <cmath> // FIX: abs için eklendi
-
+ 
 // ============================================================
 // CLASS DEFINITIONS
 // ============================================================
-
-class Rectangle; // forward declaration
-
-// FIX: forward declare friend function
-bool isSameSize(const Rectangle& r1, const Rectangle& r2);
-
+ 
 class Point {
 private:
     double x;
     double y;
 public:
     // TODO 1: Constructor with member initializer list (double x, double y)
-    Point(double x, double y) : x(x), y(y) {}
-
+    Point(double x, double y) : x(x), y(y) {}  // stub — fix initializer
+ 
     // TODO 2: const getter for x
-    double getX() const { return x; }
-
+    double getX() const { return x; }   // stub — add const
+ 
     // TODO 3: const getter for y
-    double getY() const { return y; }
-
+    double getY() const { return y; }   // stub — add const
+ 
     // TODO 4: const display()
-    void display() const { std::cout << "(" << x << ", " << y << ")"; }
-
+    void display() const { std::cout << "(x , y )"; }
+ 
     // TODO 5: declare Rectangle as friend class
     friend class Rectangle;
-
-    // FIX: allow friend function to access private x,y
-    friend bool isSameSize(const Rectangle& r1, const Rectangle& r2);
 };
-
-
+ 
+ 
 class Rectangle {
 private:
     Point topLeft;
@@ -43,100 +41,82 @@ private:
 public:
     // TODO 6: constructor with member initializer list
     Rectangle(double x1, double y1, double x2, double y2)
-        : topLeft(x1, y1), bottomRight(x2, y2) {}
-
+        : topLeft(x1,y1), bottomRight(x2,y2) {}  // stub — fix initializer
+ 
     // TODO 7: const getWidth()
-    double getWidth() const {
-        return std::fabs(bottomRight.getX() - topLeft.getX());
-    }
-
+    double getWidth() const { return std::abs (bottomRight.x - topLeft.x) ; }  // stub
+ 
     // TODO 8: const getHeight()
-    double getHeight() const {
-        return std::fabs(topLeft.getY() - bottomRight.getY());
-    }
-
+    double getHeight() const { return std ::abs (topLeft.y - bottomRight.y); }  // stub
+ 
     // TODO 9: const getArea()
-    double getArea() const {
-        return getWidth() * getHeight();
-    }
-
+    double getArea() const { return getWidth() * getHeight(); }  // stub
+ 
     // TODO 10: const display()
     void display() const {
         std::cout << "Top Left: ";
         topLeft.display();
-        std::cout << " Bottom Right: ";
+        std::cout << " \nBottomRight: ";
         bottomRight.display();
-        std::cout << std::endl;
+        std::cout << "\nWidth:" << getWidth() << " Height:" << getHeight() << " Area:" << getArea() << std::endl;
     }
-
-    // TODO 11: declare isSameSize as friend function
+ 
     friend bool isSameSize(const Rectangle& r1, const Rectangle& r2);
+ 
+    // TODO 11: declare isSameSize as friend function
 };
-
-
+ 
+ 
 // TODO 12: implement isSameSize
 bool isSameSize(const Rectangle& r1, const Rectangle& r2) {
-    const double EPS = 1e-6;
-
-    // artık private x,y erişimi OK
-    double w1 = std::fabs(r1.bottomRight.x - r1.topLeft.x);
-    double h1 = std::fabs(r1.topLeft.y - r1.bottomRight.y);
-
-    double w2 = std::fabs(r2.bottomRight.x - r2.topLeft.x);
-    double h2 = std::fabs(r2.topLeft.y - r2.bottomRight.y);
-
-    return (std::fabs(w1 - w2) < EPS) &&
-           (std::fabs(h1 - h2) < EPS);
+    return r1.getArea() == r2.getArea() ;
 }
-
-
+ 
+ 
 class ConstDemo {
 private:
     int value;
 public:
     // TODO 13: constructor with member initializer list
-    ConstDemo(int v) : value(v) {}
-
+    ConstDemo(int v) : value(v) {}  // stub — fix initializer
+ 
     // TODO 14: const getValue()
-    int getValue() const { return value; }
-
+    int getValue() const { return value; }  // stub — add const
+ 
     // TODO 15: NON-const doubleValue() — multiplies value by 2
-    void doubleValue() { value *= 2; }
-
+    void doubleValue() {
+        value *= 2 ;
+    }  // stub
+ 
     // TODO 16: const constGetDouble() — returns value * 2 without modifying
-    int constGetDouble() const { return value * 2; }
+    int constGetDouble() const{ return value * 2; }  // stub — add const + fix body
 };
-
-
+ 
+ 
 // ============================================================
 // MAIN
 // ============================================================
 int main() {
     // TODO 17-21: demo code
-
-    Point p1(1, 5);
-    Point p2(4, 1);
-
-    Rectangle r1(1, 5, 4, 1);
-    Rectangle r2(0, 6, 3, 2);
-
-    r1.display();
-    r2.display();
-
-    std::cout << "Area r1: " << r1.getArea() << std::endl;
-    std::cout << "Area r2: " << r2.getArea() << std::endl;
-
-    if (isSameSize(r1, r2))
-        std::cout << "Same size" << std::endl;
-    else
-        std::cout << "Different size" << std::endl;
-
-    ConstDemo c(10);
-    std::cout << "Value: " << c.getValue() << std::endl;
-    std::cout << "Double (const): " << c.constGetDouble() << std::endl;
-
-    c.doubleValue();
-    std::cout << "After doubleValue(): " << c.getValue() << std::endl;
-
+    std::cout << "Complete the TODOs above!" << std::endl;
+   
+    Rectangle rect1(0, 0, 4, 3);
+    Rectangle rect2(1, 1, 4, 4);
+ 
+    std::cout << "Rectangle 1: " << std::endl;
+    rect1.display();  
+    std::cout << "Rectangle 2: " << std::endl;
+    rect2.display();
+    std::cout << "Are the rectangles the same size? " << (isSameSize(rect1, rect2) ? "Yes" : "No") << std::endl;
+    
+     const ConstDemo cd1(7);
+    std::cout << "ConstDemo value: " << cd1.getValue() << std::endl;
+    std::cout << "ConstDemo constGetDouble: " << cd1.constGetDouble() << std::endl;
+    ConstDemo cd2(5);
+    std::cout << "Before doubleValue: " << cd2.getValue() << std::endl;
+    cd2.doubleValue();
+    std::cout << "non-const object after doublevalue : " << cd2.getValue() << std::endl;  
+ 
     return 0;
 }
+ 
