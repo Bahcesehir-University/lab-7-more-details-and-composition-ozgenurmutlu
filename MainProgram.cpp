@@ -8,6 +8,9 @@
 
 class Rectangle; // forward declaration
 
+// FIX: forward declare friend function
+bool isSameSize(const Rectangle& r1, const Rectangle& r2);
+
 class Point {
 private:
     double x;
@@ -27,6 +30,9 @@ public:
 
     // TODO 5: declare Rectangle as friend class
     friend class Rectangle;
+
+    // FIX: allow friend function to access private x,y
+    friend bool isSameSize(const Rectangle& r1, const Rectangle& r2);
 };
 
 
@@ -41,12 +47,12 @@ public:
 
     // TODO 7: const getWidth()
     double getWidth() const {
-        return std::abs(bottomRight.getX() - topLeft.getX()); // FIX
+        return std::fabs(bottomRight.getX() - topLeft.getX());
     }
 
     // TODO 8: const getHeight()
     double getHeight() const {
-        return std::abs(topLeft.getY() - bottomRight.getY()); // FIX
+        return std::fabs(topLeft.getY() - bottomRight.getY());
     }
 
     // TODO 9: const getArea()
@@ -70,10 +76,17 @@ public:
 
 // TODO 12: implement isSameSize
 bool isSameSize(const Rectangle& r1, const Rectangle& r2) {
-    const double EPS = 1e-6; // FIX: floating point karşılaştırma
+    const double EPS = 1e-6;
 
-    return (std::abs(r1.getWidth() - r2.getWidth()) < EPS) &&
-           (std::abs(r1.getHeight() - r2.getHeight()) < EPS);
+    // artık private x,y erişimi OK
+    double w1 = std::fabs(r1.bottomRight.x - r1.topLeft.x);
+    double h1 = std::fabs(r1.topLeft.y - r1.bottomRight.y);
+
+    double w2 = std::fabs(r2.bottomRight.x - r2.topLeft.x);
+    double h2 = std::fabs(r2.topLeft.y - r2.bottomRight.y);
+
+    return (std::fabs(w1 - w2) < EPS) &&
+           (std::fabs(h1 - h2) < EPS);
 }
 
 
